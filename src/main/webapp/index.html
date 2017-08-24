@@ -20,8 +20,22 @@
   <head>
     <meta http-equiv="Refresh" content="0; url=summary" />
     <title>Redirect to Trader UI</title>
+    <link rel="stylesheet" href="node_modules/@hybrid-cloud/cirrus/dist/css/cirrus.min.css/">
+    <script src='node_modules/@hybrid-cloud/cirrus/dist/js/cirrus.es5.min.js'></script>
+      <link rel="import" href="header.html"/>
+      <script src='node_modules/@hybrid-cloud/cirrus/dist/js/cirrus.es5.min.js'></script>
   </head>
+
   <body>
+  <script>
+      var link = document.querySelector('link[rel="import"]');
+      var content = link.import;
+
+      // Grab DOM from warning.html's document.
+      var el = content.querySelector('.global-header');
+
+      document.body.appendChild(el.cloneNode(true));
+  </script>
     <p>
       If not automatically redirected,
       <a href="summary">click here</a>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Portfolio</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="node_modules/@hybrid-cloud/cirrus/dist/css/cirrus.min.css/">
+    <link rel="import" href="header.html"/>
+    <script src='node_modules/@hybrid-cloud/cirrus/dist/js/cirrus.es5.min.js'></script>
+</head>
+
+<body>
+<script>
+    var link = document.querySelector('link[rel="import"]');
+    var content = link.import;
+
+    // Grab DOM from warning.html's document.
+    var el = content.querySelector('.global-header');
+
+    document.body.appendChild(el.cloneNode(true));
+</script>
+<br/>
+<div class="container">
+    <form method="post"/>
+    <div class="row">
+        <div class="radio">
+            <input id="create" class="radio__button" type="radio" name="action" value="create">
+            <label for="create" class="radio__label">Create a new portfolio</label><br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="radio">
+            <input id="retrieve" class="radio__button" type="radio" name="action" value="retrieve" checked>
+            <label for="create" class="radio__label">Retrieve selected portfolio</label><br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="radio">
+            <input id="update" class="radio__button" type="radio" name="action" value="update">
+            <label for="create" class="radio__label">Update selected portfolio (add stock)</label><br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="radio">
+            <input id="delete" class="radio__button" type="radio" name="action" value="delete">
+            <label for="create" class="radio__label">Delete selected portfolio</label><br>
+        </div>
+    </div>
+</div>
+<br/>
+<table border="1" cellpadding="5">
+    <tr>
+        <th></th>
+        <th>Owner</th>
+        <th>Total</th>
+        <th>Loyalty Level</th>
+    </tr>
+    <!-- TODO fix this and replace with a REST request-->
+    <!-- writer.append(getTableRows(request)); -->
+</table>
+<br/>
+<input type="submit" name="submit" value="Submit" style="font-family: sans-serif; font-size: 16px;">
+</form>
+<br/>
+<a href="http://ibm.com/bluemix">
+    <img src="footer.jpg"/>
+</a>
+</body>
+</html>

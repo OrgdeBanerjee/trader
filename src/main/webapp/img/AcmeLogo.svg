@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="204px" height="24px" viewBox="0 0 204 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 12</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="99.8263158%" x2="50%" y2="-0.038245614%" id="linearGradient-1">
+            <stop stop-color="#256DD3" offset="0%"></stop>
+            <stop stop-color="#07479A" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="99.8263158%" x2="50%" y2="-0.038245614%" id="linearGradient-2">
+            <stop stop-color="#256DD3" offset="0%"></stop>
+            <stop stop-color="#1255AF" offset="57.8%"></stop>
+            <stop stop-color="#07479A" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-12" transform="translate(-1.000000, 0.000000)">
+            <text id="ACME-STOCK-Co" font-family="HelvNeueBoldforIBM, HelvNeue Bold for IBM" font-size="16" font-weight="bold" letter-spacing="1.79999995" fill="#FFFFFF">
+                <tspan x="60.3754883" y="18.546875">ACME</tspan>
+                <tspan x="113.767488" y="18.546875"> </tspan>
+                <tspan x="117.575488" y="18.546875" font-family="HelvNeueRomanforIBM, HelvNeue Roman for IBM" font-weight="normal">STOCK</tspan>
+                <tspan x="179.231488" y="18.546875"> </tspan>
+                <tspan x="183.039488" y="18.546875">C</tspan>
+                <tspan x="196.231488" y="18.546875">o</tspan>
+            </text>
+            <g id="AcmeLogo-02" transform="translate(0.976562, 0.546875)" fill-rule="nonzero">
+                <polygon id="Shape" fill="url(#linearGradient-1)" points="44.4189243 23.3295915 32.1361261 23.3295915 16.2998139 7.41602909 22.4025879 1.31325515"></polygon>
+                <polygon id="Shape" fill="url(#linearGradient-2)" points="44.4189243 23.3295915 32.1361261 23.3295915 16.2998139 7.41602909 22.4025879 1.31325515"></polygon>
+                <polygon id="Shape" fill="#256DD3" points="12.7463 23.3295915 18.4628224 17.6130691 24.1020946 23.3295915"></polygon>
+                <polygon id="Shape" fill="#158FEA" points="29.5096158 0.386251515 21.398334 0.386251515 22.4025879 1.39050546 0.463501818 23.3295915 12.7463 23.3295915 28.5053618 7.4932794 29.5096158 8.42028303"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>
