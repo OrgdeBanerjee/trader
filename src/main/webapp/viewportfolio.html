@@ -18,6 +18,27 @@
 
     document.body.appendChild(el.cloneNode(true));
 </script>
+<script>
+    var qs = (function (a) {
+        if (a == "") return {};
+        var b = {};
+        for (var i = 0; i < a.length; ++i) {
+            var p = a[i].split('=', 2);
+            if (p.length == 1)
+                b[p[0]] = "";
+            else
+                b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+        }
+        return b;
+    })(window.location.search.substr(1).split('&'));
+
+    function getOwner() {
+        var span = document.getElementById("portfolioOwner");
+        console.log(span);
+        console.log(qs["owner"]);
+        span.textContent = qs["owner"];
+    }
+</script>
 <!-- TODO Replace this with a REST Request-->
 <!--
 String owner = request.getParameter("owner
@@ -35,7 +56,9 @@ JsonObject stocks = portfolio.getJsonObject("stocks
         <span class="detail-page-header__breadcrumb">Previous</span>
     </a>
     <!-- TODO make this name dynamic -->
-    <h2 class="h2 detail-page-header__heading"><span class="u-text--bold">John Doe</span></h2>
+    <h2 class="h2 detail-page-header__heading">
+        <span id="portfolioOwner" class="u-text--bold" onload="getOwner()">John Doe</span>
+    </h2>
 </header>
 <main class="main" role="main">
     <section class="section"></section>
@@ -116,7 +139,27 @@ JsonObject stocks = portfolio.getJsonObject("stocks
                         </section>
                     </div>
                     <div id="box-recommendation" class="box box--3">
-                        <div class="section"></div>
+                        <section class="section">
+                            <div class="box box--9">
+                                <div class="row">
+                                    <div class="box box--full">
+                                        <div class="module">
+                                            <header class="module__header">
+                                                <h6 class="h5 module__heading">Recommendations</h6>
+                                            </header>
+                                            <section class="module__body">
+                                                <h6 class="h6 module__heading">Issue</h6>
+                                                John is a Moderate Risk Tolerance investor.
+                                                <br/><br/>
+                                                <h6 class="h6 module__heading">Solution</h6>
+                                                Sell some stocks.
+                                            </section>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </section>
                     </div>
                 </div>
             </section>
