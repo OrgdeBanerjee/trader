@@ -55,8 +55,9 @@ public class ViewPortfolio extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String owner = request.getParameter("owner");
+        System.out.println("Owner is: " + owner);
         JsonObject portfolio = PortfolioServices.getPortfolio(owner);
-
+        System.out.println("Portfolio is: " + portfolio.toString());
         double overallTotal = portfolio.getJsonNumber("total").doubleValue();
         String loyaltyLevel = portfolio.getString("loyalty");
         JsonObject stocks = portfolio.getJsonObject("stocks");
@@ -66,9 +67,9 @@ public class ViewPortfolio extends HttpServlet {
     }
 
 
-        /**
-         * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-         */
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+     */
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //In minikube and CFC, the port number is wrong for the https redirect.
