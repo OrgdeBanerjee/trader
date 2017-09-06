@@ -76,6 +76,18 @@ public class ViewPortfolio extends HttpServlet {
         response.sendRedirect(prefix + "summary"); //send control to the Summary servlet
     }
 
+    public void doOptions(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+        //The following are CORS headers. Max age informs the
+        //browser to keep the results of this call for 1 day.
+        resp.setHeader("Access-Control-Allow-Origin", "*");
+        resp.setHeader("Access-Control-Allow-Methods", "GET, POST");
+        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        resp.setHeader("Access-Control-Max-Age", "86400");
+        //Tell the browser what requests we allow.
+        resp.setHeader("Allow", "GET, HEAD, POST, TRACE, OPTIONS");
+    }
+
     private String getTableRows(JsonObject stocks) {
         StringBuffer rows = new StringBuffer();
 
