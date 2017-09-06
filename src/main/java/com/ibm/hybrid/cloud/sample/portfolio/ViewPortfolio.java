@@ -58,11 +58,7 @@ public class ViewPortfolio extends HttpServlet {
         System.out.println("Owner is: " + owner);
         JsonObject portfolio = PortfolioServices.getPortfolio(owner);
         System.out.println("Portfolio is: " + portfolio.toString());
-//        double overallTotal = portfolio.getJsonNumber("total").doubleValue();
-//        String loyaltyLevel = portfolio.getString("loyalty");
-//        JsonObject stocks = portfolio.getJsonObject("stocks");
         Writer writer = response.getWriter();
-
         writer.append(portfolio.toString());
     }
 
