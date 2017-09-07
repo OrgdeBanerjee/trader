@@ -41,11 +41,7 @@ public class AddStock extends HttpServlet {
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String body = getBody(request);
-        System.out.println("Got request body: " + body);
-        JsonReader reader = Json.createReader(new StringReader(body));
-        JsonObject json = reader.readObject();
-        reader.close();
+        JsonObject json = BodyToJson.convert(request);
 
         String owner = json.getString("owner");
         String symbol = json.getString("symbol");
@@ -62,38 +58,5 @@ public class AddStock extends HttpServlet {
         String prefix = PortfolioServices.getRedirectWorkaround(request);
 
         response.sendRedirect(prefix + "summary");
-    }
-
-    public static String getBody(HttpServletRequest request) throws IOException {
-        String body = null;
-        StringBuilder stringBuilder = new StringBuilder();
-        BufferedReader bufferedReader = null;
-
-        try {
-            InputStream inputStream = request.getInputStream();
-            if (inputStream != null) {
-                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                char[] charBuffer = new char[128];
-                int bytesRead = -1;
-                while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
-                    stringBuilder.append(charBuffer, 0, bytesRead);
-                }
-            } else {
-                stringBuilder.append("");
-            }
-        } catch (IOException ex) {
-            throw ex;
-        } finally {
-            if (bufferedReader != null) {
-                try {
-                    bufferedReader.close();
-                } catch (IOException ex) {
-                    throw ex;
-                }
-            }
-        }
-
-        body = stringBuilder.toString();
-        return body;
     }
 }

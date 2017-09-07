@@ -55,12 +55,7 @@ public class Summary extends HttpServlet {
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String body = getBody(request);
-        System.out.println("Got request body: " + body);
-        JsonReader reader = Json.createReader(new StringReader(body));
-        JsonObject json = reader.readObject();
-        reader.close();
-
+        JsonObject json = BodyToJson.convert(request);
 
         String action = json.getString("action");
         String owner = json.getString("owner");
