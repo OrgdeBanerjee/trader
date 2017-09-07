@@ -16,40 +16,84 @@
 
 package com.ibm.hybrid.cloud.sample.portfolio;
 
-import java.io.IOException;
-import java.io.Writer;
-
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringReader;
 
 /**
  * Servlet implementation class AddStock
  */
-@WebServlet(description = "Add Stock servlet", urlPatterns = { "/addStock" })
+@WebServlet(description = "Add Stock servlet", urlPatterns = {"/addStock"})
 public class AddStock extends HttpServlet {
-	private static final long serialVersionUID = 4815162342L;
+    private static final long serialVersionUID = 4815162342L;
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String owner = request.getParameter("owner");
-		String symbol = request.getParameter("symbol");
-		String shareString = request.getParameter("shares");
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String body = getBody(request);
+        System.out.println("Got request body: " + body);
+        JsonReader reader = Json.createReader(new StringReader(body));
+        JsonObject json = reader.readObject();
+        reader.close();
 
-		if ((shareString!=null) && !shareString.equals("")) {
-			int shares = Integer.parseInt(shareString);
-			PortfolioServices.updatePortfolio(owner, symbol, shares);
-		}
+        String owner = json.getString("owner");
+        String symbol = json.getString("symbol");
+        String shareString = json.getString("shares");
+        JsonObject newPortfolio;
+        if ((shareString != null) && !shareString.equals("")) {
+            int shares = Integer.parseInt(shareString);
+            newPortfolio = PortfolioServices.updatePortfolio(owner, symbol, shares);
+        }
 
-		//In minikube and CFC, the port number is wrong for the https redirect.
-		//This will fix that if needed - otherwise, it just returns an empty string
-		//so that we can still use relative paths
-		String prefix = PortfolioServices.getRedirectWorkaround(request);
+        //In minikube and CFC, the port number is wrong for the https redirect.
+        //This will fix that if needed - otherwise, it just returns an empty string
+        //so that we can still use relative paths
+        String prefix = PortfolioServices.getRedirectWorkaround(request);
 
-		response.sendRedirect(prefix+"summary");
-	}
+        response.sendRedirect(prefix + "summary");
+    }
+
+    public static String getBody(HttpServletRequest request) throws IOException {
+        String body = null;
+        StringBuilder stringBuilder = new StringBuilder();
+        BufferedReader bufferedReader = null;
+
+        try {
+            InputStream inputStream = request.getInputStream();
+            if (inputStream != null) {
+                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                char[] charBuffer = new char[128];
+                int bytesRead = -1;
+                while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
+                    stringBuilder.append(charBuffer, 0, bytesRead);
+                }
+            } else {
+                stringBuilder.append("");
+            }
+        } catch (IOException ex) {
+            throw ex;
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException ex) {
+                    throw ex;
+                }
+            }
+        }
+
+        body = stringBuilder.toString();
+        return body;
+    }
 }
