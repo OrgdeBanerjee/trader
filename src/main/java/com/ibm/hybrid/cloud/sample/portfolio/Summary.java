@@ -1,12 +1,19 @@
 package com.ibm.hybrid.cloud.sample.portfolio;
 
+import javax.json.Json;
 import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.io.Writer;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
@@ -48,8 +55,15 @@ public class Summary extends HttpServlet {
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
-        String owner = request.getParameter("owner");
+        String body = getBody(request);
+        System.out.println("Got request body: " + body);
+        JsonReader reader = Json.createReader(new StringReader(body));
+        JsonObject json = reader.readObject();
+        reader.close();
+
+
+        String action = json.getString("action");
+        String owner = json.getString("owner");
 
         if (action != null) {
             //In minikube and CFC, the port number is wrong for the https redirect.
@@ -79,27 +93,38 @@ public class Summary extends HttpServlet {
 
         JsonArray portfolios = PortfolioServices.getPortfolios();
         return portfolios;
+    }
 
-//		for (int index=0; index<portfolios.size(); index++) {
-//			JsonObject portfolio = (JsonObject) portfolios.get(index);
-//
-//			String owner = portfolio.getString("owner");
-//			double total = portfolio.getJsonNumber("total").doubleValue();
-//			String loyaltyLevel = portfolio.getString("loyalty");
-//
-//			rows.append("        <tr>");
-//			rows.append("          <td><input type=\"radio\" name=\"owner\" value=\""+owner+"\"");
-//			if (index == 0) {
-//				rows.append(" checked");
-//			}
-//			rows.append("></td>");
-//
-//			rows.append("          <td>"+owner+"</td>");
-//			rows.append("          <td>$"+currency.format(total)+"</td>");
-//			rows.append("          <td>"+loyaltyLevel+"</td>");
-//			rows.append("        </tr>");
-//		}
-//
-//		return rows.toString();
+    public static String getBody(HttpServletRequest request) throws IOException {
+        String body = null;
+        StringBuilder stringBuilder = new StringBuilder();
+        BufferedReader bufferedReader = null;
+
+        try {
+            InputStream inputStream = request.getInputStream();
+            if (inputStream != null) {
+                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                char[] charBuffer = new char[128];
+                int bytesRead = -1;
+                while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
+                    stringBuilder.append(charBuffer, 0, bytesRead);
+                }
+            } else {
+                stringBuilder.append("");
+            }
+        } catch (IOException ex) {
+            throw ex;
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException ex) {
+                    throw ex;
+                }
+            }
+        }
+
+        body = stringBuilder.toString();
+        return body;
     }
 }
