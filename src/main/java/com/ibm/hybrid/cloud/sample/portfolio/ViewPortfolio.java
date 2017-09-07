@@ -54,8 +54,8 @@ public class ViewPortfolio extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        JsonObject json = BodyToJson.convert(request);
-        String owner = json.getString("owner");
+        //JsonObject json = BodyToJson.convert(request);
+        String owner = request.getParameter("owner");
         System.out.println("Owner is: " + owner);
         JsonObject portfolio = PortfolioServices.getPortfolio(owner);
         System.out.println("Portfolio is: " + portfolio.toString());
