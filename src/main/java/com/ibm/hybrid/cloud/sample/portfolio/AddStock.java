@@ -18,17 +18,12 @@ package com.ibm.hybrid.cloud.sample.portfolio;
 
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.json.JsonReader;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.StringReader;
 
 /**
  * Servlet implementation class AddStock
@@ -46,17 +41,13 @@ public class AddStock extends HttpServlet {
         String owner = json.getString("owner");
         String symbol = json.getString("symbol");
         String shareString = json.getString("shares");
-        JsonObject newPortfolio;
+        JsonObject newPortfolio = Json.createObjectBuilder().build();
         if ((shareString != null) && !shareString.equals("")) {
             int shares = Integer.parseInt(shareString);
             newPortfolio = PortfolioServices.updatePortfolio(owner, symbol, shares);
         }
+        System.out.println("Response is " + newPortfolio);
 
-        //In minikube and CFC, the port number is wrong for the https redirect.
-        //This will fix that if needed - otherwise, it just returns an empty string
-        //so that we can still use relative paths
-        String prefix = PortfolioServices.getRedirectWorkaround(request);
-
-        response.sendRedirect(prefix + "summary");
+        response.getWriter().write(newPortfolio.toString());
     }
 }
