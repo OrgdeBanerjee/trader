@@ -73,7 +73,7 @@ public class Summary extends HttpServlet {
 		writer.append("    </form>");
 		writer.append("    <br/>");
 		writer.append("    <a href=\"http://ibm.com/bluemix\">");
-		writer.append("      <img src=\"footer.jpg\"/>");
+		// writer.append("      <img src=\"footer.jpg\"/>");
 		writer.append("    </a>");
 		writer.append("  </body>");
 		writer.append("</html>");
